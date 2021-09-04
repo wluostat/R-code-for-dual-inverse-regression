@@ -5,4 +5,4 @@ The R codes include three main functions:
 2. ladle.dirm: the function that determines the dimension of the reduced predictor.
 3. ladle.glb: the function that determines whether the unique global subspace exists.
 
-Please see the header of each R function for more details.
+Please see the header of each R function for more details. Please also contact the author at wluostat@yahoo.com for any questions or requests.

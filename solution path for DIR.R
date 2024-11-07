@@ -196,6 +196,33 @@ for (i in 1:p)
 return(u)
 }
 
+ryt<-function(Y,T,X,r,d,methody,methodt,slicey,slicet)
+{
+ Z<-stand(X)
+ if ((methody=="sir")|(methody=="save"))
+  {
+   sy<-dr(Y~Z,method=methody,nslices=slicey)
+   my<-sy$evectors%*%diag(sy$evalues)%*%t(sy$evectors)
+  }
+ if (methody=="dr") {my<-mhat_dr(Z,Y,slicey)}
+ if ((methodt=="sir")|(methodt=="save"))
+  {
+   st<-dr(T~Z,method=methodt,nslices=slicet)
+   mt<-st$evectors%*%diag(st$evalues)%*%t(st$evectors)
+  }
+ if (methodt=="dr") {mt<-mhat_dr(Z,T,slicet)}
+
+ myt<-t(my)%*%mt
+ s<-svd(myt)
+ uy<-svd(my%*%s$u[,1:d])$u[,1:d]
+ ut<-svd(mt%*%s$v[,1:d])$u[,1:d]
+ syt<-svd(t(uy)%*%ut)
+ if (r==0) {ryt<-t(uy)%*%ut} else {
+ ryt<-syt$d[r]*diag(1,d-r+1)-
+      (syt$u[,r:d])%*%diag(syt$d[r:d])%*%t(syt$v[,r:d]) }
+ return(ryt%*%t(ryt))
+}
+
 #########  detecting multiplicity of singular values of Uy'Ut
 agv_dir<-function(Y,T,X,r,d,k,rep,methody,methodt,slicey,slicet)
 {

@@ -1,5 +1,4 @@
 source("ladle-prepare.R")
-source("ladle.R")
 library(abind)
 library(scatterD3)
 library(plot3D)
